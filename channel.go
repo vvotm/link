@@ -2,7 +2,6 @@ package link
 
 import (
 	"sync"
-	"math/rand"
 )
 
 type KEY interface{}
@@ -40,13 +39,6 @@ func (channel *Channel) Get(key KEY) *Session {
 	defer channel.mutex.RUnlock()
 	session, _ := channel.sessions[key]
 	return session
-}
-
-func (channel *Channel) GetByRandom() *Session {
-	channel.mutex.RLock()
-	defer channel.mutex.RUnlock()
-	index := rand.Intn(len(channel.sessions))
-	return channel.sessions[index]
 }
 
 func (channel *Channel) Put(key KEY, session *Session) {
